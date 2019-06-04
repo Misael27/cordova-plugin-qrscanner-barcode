@@ -456,6 +456,13 @@ public class QRScanner extends CordovaPlugin implements BarcodeCallback {
                 //Configure the decoder
                 ArrayList<BarcodeFormat> formatList = new ArrayList<BarcodeFormat>();
                 formatList.add(BarcodeFormat.QR_CODE);
+                formatList.add(BarcodeFormat.EAN_8);
+                formatList.add(BarcodeFormat.EAN_13);
+                formatList.add(BarcodeFormat.CODE_128);
+                formatList.add(BarcodeFormat.CODE_39);
+                formatList.add(BarcodeFormat.CODE_93);
+                formatList.add(BarcodeFormat.CODABAR);
+
                 mBarcodeView.setDecoderFactory(new DefaultDecoderFactory(formatList, null, null));
 
                 //Configure the camera (front/back)
@@ -487,7 +494,35 @@ public class QRScanner extends CordovaPlugin implements BarcodeCallback {
 
         if(barcodeResult.getText() != null) {
             scanning = false;
-            this.nextScanCallback.success(barcodeResult.getText());
+            String format = "";
+            switch (barcodeResult.getBarcodeFormat()) {
+                case BarcodeFormat.QR_CODE :
+                    format = "qr";
+                break;
+                case ABarcodeFormat.EAN_8 :
+                    format = "ean8";
+                break;
+                case BarcodeFormat.EAN_13 :
+                    format = "ean13";
+                break;
+                case BarcodeFormat.CODE_128:
+                    format = "code128";
+                break;
+                case BarcodeFormat.CODE_39 :
+                    format = "code39";
+                break;
+                case BarcodeFormat.CODE_93 :
+                    format = "code93";
+                break;
+                case BarcodeFormat.CODABAR :
+                    format = "codabar";
+                break;
+                default:
+                    format = "";
+                break
+            }
+
+            this.nextScanCallback.success(barcodeResult.getText() + "|" + format);
             this.nextScanCallback = null;
         }
         else {
