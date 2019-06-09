@@ -519,7 +519,7 @@ public class QRScanner extends CordovaPlugin implements BarcodeCallback {
                 break;
                 default:
                     format = "";
-                break
+                break;
             }
 
             this.nextScanCallback.success(barcodeResult.getText() + "|" + format);
