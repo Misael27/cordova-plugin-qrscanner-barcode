@@ -495,33 +495,30 @@ public class QRScanner extends CordovaPlugin implements BarcodeCallback {
         if(barcodeResult.getText() != null) {
             scanning = false;
             String format = "";
-            switch (barcodeResult.getBarcodeFormat()) {
-                case BarcodeFormat.QR_CODE :
-                    format = "qr";
-                break;
-                case ABarcodeFormat.EAN_8 :
-                    format = "ean8";
-                break;
-                case BarcodeFormat.EAN_13 :
-                    format = "ean13";
-                break;
-                case BarcodeFormat.CODE_128:
-                    format = "code128";
-                break;
-                case BarcodeFormat.CODE_39 :
-                    format = "code39";
-                break;
-                case BarcodeFormat.CODE_93 :
-                    format = "code93";
-                break;
-                case BarcodeFormat.CODABAR :
-                    format = "codabar";
-                break;
-                default:
-                    format = "";
-                break;
+			if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.QR_CODE)) {
+              format = "qr";
             }
-
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.EAN_8)) {
+              format = "ean8";
+            }
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.EAN_13)) {
+              format = "ean13";
+            }
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.CODE_128)) {
+              format = "code128";
+            }
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.CODE_39)) {
+              format = "code39";
+            }
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.CODE_93)) {
+              format = "code93";
+            }
+            else  if (barcodeResult.getBarcodeFormat().equals(BarcodeFormat.CODABAR)) {
+              format = "codabar";
+            }
+            else {
+              format = "";
+            }
             this.nextScanCallback.success(barcodeResult.getText() + "|" + format);
             this.nextScanCallback = null;
         }
